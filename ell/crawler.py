@@ -8,6 +8,6 @@ radiohtml = urllib.request.urlopen(radiourl).read()
 # print(type(radiohtml))
 
 # look for content links
-shows = re.findall(b'meta\sproperty.*content="(.*)"', radiohtml)
+shows = re.findall(b'meta\sproperty="og:url".*content="(.*)"', radiohtml)
 for show in shows:
     print(show.decode())

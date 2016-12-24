@@ -8,7 +8,8 @@ Currently can only dl a signle file at a time and only mp3s, while i was making 
 
 Downloads are powered by [youtube_dl] (https://github.com/rg3/youtube-dl/)
 
-## Dependancies
+## Dependancies:
 [youtube_dl] (https://github.com/rg3/youtube-dl/)
 
-
+## Usage:
+**to be refactored**

@@ -48,6 +48,7 @@ def multidl(list):
     for i in list:
         # figure what dl options to use
         if re.search('video', i):
+            # yt_dl defaults to what it wants with empty {}
             ydl_opts = {}
             dl(get_tv_episode(i), ydl_opts)
         else:
@@ -64,9 +65,9 @@ test = {}
 
 
 def main():
-    # get_radio_show(radiourl)
+    get_radio_show(radiourl)
     get_tv_show(tvurl)
-    multidl(tvshows)
+    multidl(radioshows)
 
     # TODO proper dl options listing
     # # testing

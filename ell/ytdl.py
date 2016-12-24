@@ -1,5 +1,6 @@
 class MyLogger(object):
-    """https://github.com/rg3/youtube-dl/blob/19f37ce4b1e4251a3f53f8a5d3d0605d2526bc81/README.md#embedding-youtube-dl
+    """
+    https://github.com/rg3/youtube-dl/blob/19f37ce4b1e4251a3f53f8a5d3d0605d2526bc81/README.md#embedding-youtube-dl
     """
 
     def debug(self, msg):

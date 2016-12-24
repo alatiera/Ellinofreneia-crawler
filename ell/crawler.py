@@ -39,6 +39,7 @@ def main():
 
     # TODO proper dl options listing
     # TODO fix tvdl in ydl_opts
+    # TODO make it so it will iterate a list and dl all of them
     with youtube_dl.YoutubeDL(ytdl.ydl_opts) as ydl:
         ydl.download([radioshows[0]])
 

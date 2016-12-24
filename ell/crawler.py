@@ -24,6 +24,14 @@ def get_tv_show(url):
     for b in title: tit.append(b.decode())
 
 
+def get_tv_episode(url):
+    """takes url and find the youtube url"""
+    html = urllib.request.urlopen(url).read()
+    episode = re.findall(b'src="(.+youtube\.com/watch.+)"', html)
+    # print(episode[0].decode())
+    return episode[0].decode()
+
+
 def dl(url, opt):
     """Takes url as content location and opt as youtube_dl options"""
     with youtube_dl.YoutubeDL(opt) as ydl:
@@ -35,14 +43,13 @@ def dl(url, opt):
             exit()
 
 
-def continues_dl(list):
+def multidl(list):
     """iterates a list of urls and passes them to dl()"""
     for i in list:
         # figure what dl options to use
-        print(re.search('video', i))
         if re.search('video', i):
             ydl_opts = {}
-            dl(i, ydl_opts)
+            dl(get_tv_episode(i), ydl_opts)
         else:
             dl(i, ytdl.ydl_opts)
 
@@ -59,16 +66,14 @@ test = {}
 def main():
     # get_radio_show(radiourl)
     get_tv_show(tvurl)
-    continues_dl(tvshows)
+    multidl(tvshows)
 
     # TODO proper dl options listing
-    # TODO fix tvdl in ydl_opts
-    # TODO make it so it will iterate a list and dl all of them
     # # testing
     # print(tvshows)
     # print(tit)
-    for i in range(len(tvshows)):
-        test[tvshows[i]] = tit[i]
+    # for i in range(len(tvshows)):
+    #     test[tvshows[i]] = tit[i]
     # print(test.keys(), test.values())
 
 

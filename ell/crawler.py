@@ -5,7 +5,7 @@ import ytdl
 
 
 def get_radio_show(url):
-    """ Extract the urls of the radio shows"""
+    """ Extract the urls as a list of the radio shows"""
     html = urllib.request.urlopen(url).read()
     shows = re.findall(b'meta\sproperty="og:url".*content="(.*)"', html)
     for i in shows:
@@ -14,21 +14,23 @@ def get_radio_show(url):
 
 
 def get_tv_show(url):
+    """Gets the a url list of the episodes in the page"""
+    # might also get the tittle and bind them with a Dict for later use
     html = urllib.request.urlopen(url).read()
     # print(html.decode())
-    # TODO extract episode title also
-    shows = re.findall(b'href="/(television/tv-shows/video/\S+")', html)
-    for i in shows:
-        tvshows.append(site + i.decode())
-        # print(i.decode())
+    shows = re.findall(b'href="/(television/tv-shows/video/\S+)"', html)
+    title = re.findall(b'data-title="(.*?)"', html)
+    for a in shows: tvshows.append(site + a.decode())
+    for b in title: tit.append(b.decode())
 
 
-# TODO +tv link
 site = 'http://ellinofreneianet.gr/'
-radiourl = 'http://www.ellinofreneianet.gr/radio/radio-shows-2.html'
-tvurl = 'http://ellinofreneianet.gr/television/tv-shows.html'
+radiourl = site + 'radio/radio-shows-2.html'
+tvurl = site + 'television/tv-shows.html'
 radioshows = []
 tvshows = []
+tit = []
+test = {}
 
 
 def main():
@@ -41,9 +43,11 @@ def main():
         ydl.download([radioshows[0]])
 
     # # testing
-    # for i in tvshows:
-    #     print(i)
-
+    # print(tvshows)
+    # print(tit)
+    for i in range(len(tvshows)):
+        test[tvshows[i]] = tit[i]
+    # print(test.keys(), test.values())
 
 
 main()

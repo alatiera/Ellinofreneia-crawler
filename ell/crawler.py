@@ -24,15 +24,27 @@ def get_tv_show(url):
     for b in title: tit.append(b.decode())
 
 
+def dl(url, opt):
+    """Takes url as content location and opt as youtube_dl options"""
+    with youtube_dl.YoutubeDL(opt) as ydl:
+        try:
+            print('downloading from: {}'.format(url))
+            ydl.download([url])
+        except KeyboardInterrupt:
+            print('cancelling')
+            exit()
+
+
 def continues_dl(list):
+    """iterates a list of urls and passes them to dl()"""
     for i in list:
-        with youtube_dl.YoutubeDL(ytdl.ydl_opts) as ydl:
-            try:
-                print('downloading {}'.format(i))
-                ydl.download([i])
-            except KeyboardInterrupt:
-                print('cancelling')
-                exit()
+        # figure what dl options to use
+        print(re.search('video', i))
+        if re.search('video', i):
+            ydl_opts = {}
+            dl(i, ydl_opts)
+        else:
+            dl(i, ytdl.ydl_opts)
 
 
 site = 'http://ellinofreneianet.gr/'
@@ -45,9 +57,9 @@ test = {}
 
 
 def main():
-    get_radio_show(radiourl)
-    # get_tv_show(tvurl)
-    continues_dl(radioshows)
+    # get_radio_show(radiourl)
+    get_tv_show(tvurl)
+    continues_dl(tvshows)
 
     # TODO proper dl options listing
     # TODO fix tvdl in ydl_opts

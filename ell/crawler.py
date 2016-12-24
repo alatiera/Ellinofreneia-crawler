@@ -24,6 +24,17 @@ def get_tv_show(url):
     for b in title: tit.append(b.decode())
 
 
+def continues_dl(list):
+    for i in list:
+        with youtube_dl.YoutubeDL(ytdl.ydl_opts) as ydl:
+            try:
+                print('downloading {}'.format(i))
+                ydl.download([i])
+            except KeyboardInterrupt:
+                print('cancelling')
+                exit()
+
+
 site = 'http://ellinofreneianet.gr/'
 radiourl = site + 'radio/radio-shows-2.html'
 tvurl = site + 'television/tv-shows.html'
@@ -35,14 +46,12 @@ test = {}
 
 def main():
     get_radio_show(radiourl)
-    get_tv_show(tvurl)
+    # get_tv_show(tvurl)
+    continues_dl(radioshows)
 
     # TODO proper dl options listing
     # TODO fix tvdl in ydl_opts
     # TODO make it so it will iterate a list and dl all of them
-    with youtube_dl.YoutubeDL(ytdl.ydl_opts) as ydl:
-        ydl.download([radioshows[0]])
-
     # # testing
     # print(tvshows)
     # print(tit)

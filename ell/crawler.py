@@ -19,9 +19,9 @@ def get_tv_show(url):
     html = urllib.request.urlopen(url).read()
     # print(html.decode())
     shows = re.findall(b'href="/(television/tv-shows/video/\S+)"', html)
-    title = re.findall(b'data-title="(.*?)"', html)
+    # title = re.findall(b'data-title="(.*?)"', html)
     for a in shows: tvshows.append(site + a.decode())
-    for b in title: tit.append(b.decode())
+    # for b in title: tit.append(b.decode())
 
 
 def get_tv_episode(url):
@@ -43,9 +43,9 @@ def dl(url, opt):
             exit()
 
 
-def multidl(list):
+def multidl(list, limit):
     """iterates a list of urls and passes them to dl()"""
-    for i in list:
+    for i in list[:limit]:
         # figure what dl options to use
         if re.search('video', i):
             # yt_dl defaults to what it wants with empty {}
@@ -55,27 +55,33 @@ def multidl(list):
             dl(i, ytdl.ydl_opts)
 
 
+def getshow(type):
+    if type == 'radio':
+        get_radio_show(radiourl)
+        return radioshows
+    elif type == 'tv':
+        get_tv_show(tvurl)
+        return tvshows
+    elif type == 'both':
+        pass
+    else:
+        print('unkown argument, exiting')
+        exit()
+
+
+def media(type, amount):
+    multidl(getshow(type), int(amount))
+
+
+# TODO proper dl options listing
+# TODO auto navigation for full backlog download
 site = 'http://ellinofreneianet.gr/'
 radiourl = site + 'radio/radio-shows-2.html'
 tvurl = site + 'television/tv-shows.html'
 radioshows = []
 tvshows = []
-tit = []
-test = {}
+# tit = []
+# test = {}
 
 
-def main():
-    get_radio_show(radiourl)
-    get_tv_show(tvurl)
-    multidl(radioshows)
-
-    # TODO proper dl options listing
-    # # testing
-    # print(tvshows)
-    # print(tit)
-    # for i in range(len(tvshows)):
-    #     test[tvshows[i]] = tit[i]
-    # print(test.keys(), test.values())
-
-
-main()
+media('radio', '3')

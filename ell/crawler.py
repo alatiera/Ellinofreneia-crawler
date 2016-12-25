@@ -2,6 +2,7 @@ import urllib.request
 import re
 import youtube_dl
 import ytdl
+from sys import argv
 
 
 def get_radio_show(url):
@@ -82,6 +83,13 @@ radioshows = []
 tvshows = []
 # tit = []
 # test = {}
+# media('radio', '3')
 
 
-media('radio', '3')
+def main():
+    type = argv[1]
+    amount = argv[2]
+    media(type, amount)
+
+
+main()

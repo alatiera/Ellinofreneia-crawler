@@ -2,7 +2,7 @@
 Crawler of Ellinofreneianet.gr for offline content consumption
 
 ## Info:
-Currently can only dl a signle file at a time and only mp3s, while i was making this i found 2 rss feeds you probably will be better off using.
+While making this I found 2 rss feeds you probably will be better off using.
 [radio] (http://www.ellinofreneianet.gr/radio/radio-shows-2.feed?type=rss)
 [tv] (http://www.ellinofreneianet.gr/television/tv-shows.feed?type=rss)
 
@@ -12,7 +12,7 @@ Downloads are powered by [youtube_dl] (https://github.com/rg3/youtube-dl/)
 [youtube_dl] (https://github.com/rg3/youtube-dl/)
 
 ## Usage:
-crawler.py is the main exec and take 2 argument.
+crawler.py is the main executable and take 2 argument or run without and get promted for the arguments.
 The 1st is the type of show you want.
 The 2nd is how many episodes you want to download.(Currently only supports last X episodes)
 

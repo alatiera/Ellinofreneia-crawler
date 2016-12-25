@@ -87,8 +87,14 @@ tvshows = []
 
 
 def main():
-    type = argv[1]
-    amount = argv[2]
+    print(argv)
+    if len(argv) <= 1:
+        type = input("What type of content do you want: radio or tv? ")
+        amount = input('Great! And how many episodes? ')
+        if amount == 'a' or 'all': amount = -1
+    else:
+        type = argv[1]
+        amount = argv[2]
     media(type, amount)
 
 

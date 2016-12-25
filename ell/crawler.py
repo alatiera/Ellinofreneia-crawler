@@ -56,22 +56,22 @@ def multidl(list, limit):
             dl(i, ytdl.ydl_opts)
 
 
-def getshow(type):
-    if type == 'radio':
+def getshow(stype):
+    if stype == 'radio':
         get_radio_show(radiourl)
         return radioshows
-    elif type == 'tv':
+    elif stype == 'tv':
         get_tv_show(tvurl)
         return tvshows
-    elif type == 'both':
+    elif stype == 'both':
         pass
     else:
         print('unkown argument, exiting')
         exit()
 
 
-def media(type, amount):
-    multidl(getshow(type), int(amount))
+def media(stype, amount):
+    multidl(getshow(stype), int(amount))
 
 
 # TODO proper dl options listing
@@ -89,13 +89,13 @@ tvshows = []
 def main():
     print(argv)
     if len(argv) <= 1:
-        type = input("What type of content do you want: radio or tv? ")
+        stype = input("What type of content do you want: radio or tv? ")
         amount = input('Great! And how many episodes? ')
         if amount == 'a' or 'all': amount = -1
     else:
-        type = argv[1]
+        stype = argv[1]
         amount = argv[2]
-    media(type, amount)
+    media(stype, amount)
 
 
 main()

@@ -16,16 +16,16 @@ crawler.py is the main executable and take 2 argument or run without and get pro
 The 1st is the type of show you want.
 The 2nd is how many episodes you want to download.(Currently only supports last X episodes)
 
-    ./crawler.py <showtype> <episodes number>
+    python3 crawler.py <showtype> <episodes number>
 
-showtype take either "radio" or "tv" as values
+showtype can be passed "radio" or "tv" or "both" as values
 number can be any intiger, negative numbers act as infinity
 
 Filesa re downloaded on the folder the script executes
 
 ## Example:
-    ./crawler.py tv 2
+    python3 crawler.py tv 2
 This will download the 2 latest tv episodes
 
-    ./crawler.py radio 5
+    python3 crawler.py radio 5
 Downloads the 5 latest radioshows

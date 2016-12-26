@@ -40,13 +40,13 @@ def dl(url, opt):
             print('downloading from: {}'.format(url))
             ydl.download([url])
         except KeyboardInterrupt:
-            print('cancelling')
+            print('\ncancelling')
             exit()
 
 
-def multidl(list, limit):
+def multidl(list):
     """iterates a list of urls and passes them to dl()"""
-    for i in list[:limit]:
+    for i in list:
         # figure what dl options to use
         if re.search('video', i):
             # yt_dl defaults to what it wants with empty {}
@@ -56,25 +56,22 @@ def multidl(list, limit):
             dl(i, ytdl.ydl_opts)
 
 
-def getshow(stype):
+def getshow(stype, limit):
     if stype == 'radio':
         get_radio_show(radiourl)
-        return radioshows
+        return radioshows[:limit]
     elif stype == 'tv':
         get_tv_show(tvurl)
-        return tvshows
+        return tvshows[:limit]
     elif stype == 'both':
-        pass
+        get_radio_show(radiourl)
+        get_tv_show(tvurl)
+        return tvshows[:limit] + radioshows[:limit]
     else:
         print('unkown argument, exiting')
         exit()
 
 
-def media(stype, amount):
-    multidl(getshow(stype), int(amount))
-
-
-# TODO proper dl options listing
 # TODO auto navigation for full backlog download
 site = 'http://ellinofreneianet.gr/'
 radiourl = site + 'radio/radio-shows-2.html'
@@ -83,19 +80,17 @@ radioshows = []
 tvshows = []
 # tit = []
 # test = {}
-# media('radio', '3')
 
 
 def main():
-    print(argv)
     if len(argv) <= 1:
-        stype = input("What type of content do you want: radio or tv? ")
+        stype = input("What type of content do you want: radio or tv or both? ")
         amount = input('Great! And how many episodes? ')
         if amount == 'a' or 'all': amount = -1
     else:
         stype = argv[1]
-        amount = argv[2]
-    media(stype, amount)
+        amount = int(argv[2])
+    multidl(getshow(stype, amount))
 
 
 main()

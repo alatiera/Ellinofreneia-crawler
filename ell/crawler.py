@@ -29,7 +29,6 @@ def get_tv_episode(url):
     """takes url and find the youtube url"""
     html = urllib.request.urlopen(url).read()
     episode = re.findall(b'src="(.+youtube\.com/watch.+)"', html)
-    # print(episode[0].decode())
     return episode[0].decode()
 
 
@@ -66,7 +65,7 @@ def getshow(stype, limit):
     elif stype == 'both':
         get_radio_show(radiourl)
         get_tv_show(tvurl)
-        return tvshows[:limit] + radioshows[:limit]
+        return radioshows[:limit] + tvshows[:limit]
     else:
         print('unkown argument, exiting')
         exit()
@@ -84,13 +83,12 @@ tvshows = []
 
 def main():
     if len(argv) <= 1:
-        stype = input("What type of content do you want: radio or tv or both? ")
+        stype = input("What type of content do you want:radio or tv or both? ")
         amount = input('Great! And how many episodes? ')
-        if amount == 'a' or 'all': amount = -1
     else:
         stype = argv[1]
-        amount = int(argv[2])
-    multidl(getshow(stype, amount))
+        amount = argv[2]
+    multidl(getshow(stype, int(amount)))
 
 
 main()

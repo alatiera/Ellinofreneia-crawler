@@ -12,16 +12,15 @@ Downloads are powered by [youtube_dl] (https://github.com/rg3/youtube-dl/)
 [youtube_dl] (https://github.com/rg3/youtube-dl/)
 
 ## Usage:
-crawler.py is the main executable and take 2 argument or run without and get promted for the arguments.
+crawler.py is the main executable and take 2 argumentrs
 The 1st is the type of show you want.
-The 2nd is how many episodes you want to download.(Currently only supports last X episodes)
-
+The 2nd is how many episodes you want to download.
     python3 crawler.py <showtype> <episodes number>
 
 showtype can be passed "radio" or "tv" or "both" as values
-number can be any intiger, negative numbers act as infinity
+number can be any intiger
 
-Filesa re downloaded on the folder the script executes
+Files are downloaded on the folder the script executes
 
 ## Example:
     python3 crawler.py tv 2

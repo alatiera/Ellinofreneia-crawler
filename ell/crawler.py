@@ -62,6 +62,7 @@ def getshow(stype, limit):
     l = showlimit(stype)
     # print(l)
 
+    # ensures that you dont fetch the whole backlog if not need
     while limit >= len(showslist) and count <= l:
         # print(showslist)
         count = backlog(stype, count)
@@ -70,6 +71,7 @@ def getshow(stype, limit):
 
 
 def backlog(stype, count):
+    """Points to diff backlogs to fetch"""
     if stype == 'radio':
         getRadioShow(radiourl + radioargs + str(count))
         count += 11
@@ -116,20 +118,21 @@ showslist = []
 # test = {}
 
 
-# TODO better argv handling, add -h on error or no args
 def main():
-    if len(argv) <= 1:
-        stype = input("What type of content do you want:radio or tv or both? ")
-        amount = input('Great! And how many episodes? ')
+    if len(argv) != 3 or argv[1] == "-h" or argv[1] == "--help":
+        print('Usage:\n'
+              '<script> <type> <amount>\n'
+              'Example:\n'
+              './crawler.py tv 2\n'
+              './crawler.py radio 5\n')
     else:
         stype = argv[1]
         amount = argv[2]
-
-    if stype == 'both':
-        getshow('radio', int(amount))
-        getshow('tv', int(amount))
-    else:
-        getshow(stype, int(amount))
+        if stype == 'both':
+            getshow('radio', int(amount))
+            getshow('tv', int(amount))
+        else:
+            getshow(stype, int(amount))
 
 
 main()

@@ -14,19 +14,16 @@ def getRadioShow(pageurl):
     for i in shows:
         showslist.append(i.decode())
         # print(i.decode())
-    return showslist
 
 
 def getTVShow(pageurl):
     """Gets the a url list of the episodes in the page"""
-    # might also get the tittle and bind them with a Dict for later use
     page = urllib.request.urlopen(pageurl).read()
     # print(page.decode())
     shows = re.findall(b'href="/(television/tv-shows/video/\S+)"', page)
-    # title = re.findall(b'data-title="(.*?)"', page)
-    for a in shows: showslist.append(site + a.decode())
-    # for b in title: tit.append(b.decode())
-    return showslist
+    for a in shows:
+        showslist.append(site + a.decode())
+        # print(a.decode())
 
 
 def getTVEpisode(pageurl):
@@ -59,30 +56,35 @@ def multidl(list):
             dl(i, ytdl.ydl_opts)
 
 
-# restructure
 def getshow(stype, limit):
-    if stype == 'radio':
-        count = 0
-        l = showlimit(stype)
-        while count <= l:
-            print(radiourl + radioargs + str(count))
-            getRadioShow(radiourl + radioargs + str(count))
-            count += 11
-        multidl(showslist[:limit])
+    count = 0
+    showslist.clear()
+    l = showlimit(stype)
+    # print(l)
 
-    # elif stype == 'tv':
-    #     getTVShow(tvurl)
-    #     return tvshows[:limit]
-    # elif stype == 'both':
-    #     getRadioShow(radiourl)
-    #     getTVShow(tvurl)
-    #     return radioshows[:limit] + tvshows[:limit]
+    while limit >= len(showslist) and count <= l:
+        # print(showslist)
+        count = backlog(stype, count)
+
+    multidl(showslist[:limit])
+
+
+def backlog(stype, count):
+    if stype == 'radio':
+        getRadioShow(radiourl + radioargs + str(count))
+        count += 11
+        return count
+    elif stype == 'tv':
+        getTVShow(tvurl + tvargs + str(count))
+        count += 21
+        return count
     else:
         print('unkown argument, exiting')
         exit()
 
 
 def showlimit(stype):
+    """Passes the page and the type to limit() """
     if stype == 'radio':
         a = urllib.request.urlopen(radiourl).read()
         page = a.decode()
@@ -101,7 +103,6 @@ def limit(pageurl):
     return slimit
 
 
-# TODO auto navigation for full backlog download
 site = 'http://ellinofreneianet.gr/'
 radiourl = site + 'radio/radio-shows-2.html'
 tvurl = site + 'television/tv-shows.html'
@@ -115,6 +116,7 @@ showslist = []
 # test = {}
 
 
+# TODO better argv handling, add -h on error or no args
 def main():
     if len(argv) <= 1:
         stype = input("What type of content do you want:radio or tv or both? ")
@@ -122,7 +124,12 @@ def main():
     else:
         stype = argv[1]
         amount = argv[2]
-    getshow(stype, int(amount))
+
+    if stype == 'both':
+        getshow('radio', int(amount))
+        getshow('tv', int(amount))
+    else:
+        getshow(stype, int(amount))
 
 
 main()

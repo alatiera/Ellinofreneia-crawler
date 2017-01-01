@@ -39,6 +39,9 @@ def dl(contenturl, opt):
         try:
             print('downloading from: {}'.format(contenturl))
             ydl.download([contenturl])
+        except youtube_dl.DownloadError:
+            # youtube_dl 404 error
+            print('\nDownload error\n')
         except KeyboardInterrupt:
             print('\ncancelling')
             exit()
@@ -62,7 +65,7 @@ def getshow(stype, limit):
     l = showlimit(stype)
     # print(l)
 
-    # ensures that you dont fetch the whole backlog if not need
+    # ensures that you dont fetch the whole backlog if not needed
     while limit >= len(showslist) and count <= l:
         # print(showslist)
         count = backlog(stype, count)

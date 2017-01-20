@@ -3,13 +3,13 @@ Crawler of Ellinofreneianet.gr for offline content consumption
 
 ## Info:
 While making this I found 2 rss feeds you probably will be better off using.
-[radio] (http://www.ellinofreneianet.gr/radio/radio-shows-2.feed?type=rss)
-[tv] (http://www.ellinofreneianet.gr/television/tv-shows.feed?type=rss)
+[radio](http://www.ellinofreneianet.gr/radio/radio-shows-2.feed?type=rss)
+[tv](http://www.ellinofreneianet.gr/television/tv-shows.feed?type=rss)
 
-Downloads are powered by [youtube_dl] (https://github.com/rg3/youtube-dl/)
+Downloads are powered by [youtube_dl](https://github.com/rg3/youtube-dl/)
 
 ## Dependancies:
-[youtube_dl] (https://github.com/rg3/youtube-dl/)
+[youtube_dl](https://github.com/rg3/youtube-dl/)
 
 ## Usage:
 crawler.py is the main executable and take 2 argumentrs
@@ -26,6 +26,7 @@ number can be any intiger
 Files are downloaded on the folder the script executes
 
 ## Example:
+
     python3 crawler.py tv 2
 
 This will download the 2 latest tv episodes

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-from os import listdir, path, rename
+from os import listdir, rename
 
 
 months = {
@@ -20,7 +20,7 @@ months = {
 
 
 def getDate(fil):
-    """Extracts the date from file's title"""
+    """Extracts and returns the date from file's title"""
     year = re.findall('\s([0-9]{4})', fil)[0]
     day = re.findall('\s(\d{1,2})\D{2}', fil)[0]
     month = fil.split()[5]
@@ -30,12 +30,8 @@ def getDate(fil):
     return date
 
 
-def renamer(date, fil):
-    rename(fil, getDate(fil) + ' - ' + getTitle(fil) + '.mp3')
-    print('done!')
-
-
 def getTitle(fil):
+    """Extracts and returns a stripped tittle from file's dates"""
     if re.search('^[0-9]+', fil):
         title = fil[13:-4].split('-')[0]
         # print(title.lstrip())
@@ -45,10 +41,29 @@ def getTitle(fil):
         return title.lstrip()
 
 
+def getYear(fil):
+    """Extracts the year from the file"""
+    if re.search('^[0-9]+', fil):
+        year = fil[:4]
+        # print(year)
+        return year
+    else:
+        try:
+            year = getDate(fil)[:4]
+            # print(year)
+            return year
+        except IndexError:
+            pass
+
+
+def renamer(date, fil):
+    rename(fil, getDate(fil) + ' - ' + getTitle(fil) + '.mp3')
+    print('done!')
+
+
 def main():
     ls = listdir(path='.')
     for i in ls:
-        # print(path.realpath(i))
         if re.search('^[0-9]+-[0-9]+-[0-9]+', i):
             # name reversing
             # can also be used in opposite to keep only the date i[:13]
@@ -63,4 +78,4 @@ def main():
                 continue
 
 
-main()
+# main()

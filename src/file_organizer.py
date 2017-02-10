@@ -1,16 +1,6 @@
 import shutil
 from renamer import getYear
-from os import path, mkdir, getcwd
-from os import listdir
-
-
-def test_dir(src):
-    if path.exists(src) is True:
-        pass
-        # print('path {} alrdy exists'.format(src))
-    else:
-        mkdir(src)
-        print('folder {} created'.format(src))
+from os import path, mkdir, getcwd, scandir
 
 
 def move_file(fil, dest):
@@ -18,27 +8,42 @@ def move_file(fil, dest):
     shutil.move(filepath, dest)
 
 
+def test_dir(src):
+    """Checks if folder exists and creates it if not"""
+    # print(src)
+    if path.isdir(src) is True:
+        # print('path {} alrdy exists'.format(src))
+        pass
+    else:
+        mkdir(src)
+        print('folder {} created'.format(src))
+    return src
+
+
 def organize(fil):
     year = getYear(fil)
-    destination = path.join(getcwd(), year)
-    print('file set to move to: ', destination)
-    test_dir(destination)
-    try:
-        move_file(fil, destination)
-    except shutil.Error as serr:
-        print('Shutil Error: {}'.format(serr))
+    defpath = path.join(getcwd(), 'ellinofreneia')
+    if year is None:
+        print("Couldn't extract year")
+        pass
+    else:
+        destination = path.join(getcwd(), test_dir(defpath), year)
+        test_dir(destination)
+        print('file({}) set to move to: {}'.format(fil, destination))
+        try:
+            move_file(fil, path.join(destination, fil))
+        except shutil.Error as serr:
+            print('Shutil Error: {}'.format(serr))
 
 
 def main():
-    ls = listdir(path='.')
+    ls = scandir(path='.')
     for i in ls:
-        if '.mp3' in i:
-            organize(i)
+        if i.is_file() and '.mp3' in i.name:
+            organize(i.name)
         else:
             print('file error')
 
 
 # TODO remove all the main() calls and make a seperate launcher
-main()
-
-# test_dir(path.join(getcwd(), '2017'))
+# main()

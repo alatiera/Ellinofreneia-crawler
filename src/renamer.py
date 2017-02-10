@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import re
-from os import listdir, rename
+from os import scandir, rename, getcwd
 
 
 months = {
@@ -56,25 +56,28 @@ def getYear(fil):
             pass
 
 
-def renamer(date, fil):
+def renamer(fil):
     rename(fil, getDate(fil) + ' - ' + getTitle(fil) + '.mp3')
     print('done!')
 
 
 def main():
-    ls = listdir(path='.')
+    path = getcwd()
+    # TODO os.scandir() changed in python 3.6 and might need refactor
+    ls = scandir(path)
     for i in ls:
-        if re.search('^[0-9]+-[0-9]+-[0-9]+', i):
+        if re.search('^[0-9]+-[0-9]+-[0-9]+', i.name) and i.is_file():
             # name reversing
             # can also be used in opposite to keep only the date i[:13]
-            # rename(i, i[13:])
+            # rename(i.name, i.name[13:])
 
             print('alrdy good')
-        else:
+        elif i.is_file() and '.mp3' in i.name:
             try:
-                renamer(getDate(i), i)
-            except IndexError:
+                renamer(i.name)
+            except IndexError as a:
                 print('Non matching file')
+                print(a)
                 continue
 
 

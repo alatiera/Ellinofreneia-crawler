@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import re
 from os import scandir, rename, getcwd
 
@@ -79,6 +77,3 @@ def main():
                 print('Non matching file')
                 print(a)
                 continue
-
-
-# main()

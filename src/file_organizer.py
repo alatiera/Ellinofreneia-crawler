@@ -22,12 +22,12 @@ def test_dir(src):
 
 def organize(fil):
     year = getYear(fil)
-    defpath = path.join(getcwd(), 'ellinofreneia')
+    defpath = path.join(getcwd(), 'radio')
     if year is None:
         print("Couldn't extract year")
         pass
     else:
-        destination = path.join(getcwd(), test_dir(defpath), year)
+        destination = path.join(test_dir(defpath), year)
         test_dir(destination)
         print('file({}) set to move to: {}'.format(fil, destination))
         try:
@@ -42,8 +42,4 @@ def main():
         if i.is_file() and '.mp3' in i.name:
             organize(i.name)
         else:
-            print('file error')
-
-
-# TODO remove all the main() calls and make a seperate launcher
-# main()
+            print('invalid file')

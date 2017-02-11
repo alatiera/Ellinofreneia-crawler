@@ -3,34 +3,44 @@ Crawler of Ellinofreneianet.gr for offline content consumption
 
 ## Info:
 While making this I found 2 rss feeds you probably will be better off using.
-[radio](http://www.ellinofreneianet.gr/radio/radio-shows-2.feed?type=rss)
-[tv](http://www.ellinofreneianet.gr/television/tv-shows.feed?type=rss)
 
-Downloads are powered by [youtube_dl](https://github.com/rg3/youtube-dl/)
+[radio](http://www.ellinofreneianet.gr/radio/radio-shows-2.feed?type=rss)
+
+[tv](http://www.ellinofreneianet.gr/television/tv-shows.feed?type=rss)
 
 ## Dependancies:
 [youtube_dl](https://github.com/rg3/youtube-dl/)
 
-## Usage:
-crawler.py is the main executable and take 2 argumentrs
+##Usage:
+`./launcher.py [crawl] [rename] [organize]`
 
-The 1st is the type of show you want.
+###Crawl:
+crawl takes 2 arguments:
 
-The 2nd is how many episodes you want to download.
+`./launcher.py crawl <type> <amount>`
 
-    python3 crawler.py <showtype> <episodes number>
+####Examples:
 
-showtype can be passed "radio" or "tv" or "both" as values
-number can be any intiger
+`./launcher.py crawl radio 5`
 
-Files are downloaded on the folder the script executes
+Downloads the last 5 radioshows:
 
-## Example:
+`./launcher.py crawl both 3`
 
-    python3 crawler.py tv 2
+Downloads the last 3 radio and last 3 tv shows
 
-This will download the 2 latest tv episodes
+`./launcher.py crawl tv 4')`
 
-    python3 crawler.py radio 5
+Downloads the last 4 tv shows:
 
-Downloads the 5 latest radioshows
+###Audio files specific:
+
+###Rename:
+`./launcher.py rename`
+
+Rename the mp3 files based on their title.
+
+###Organize:
+`./launcher.py organize`
+
+Organizes mp3s in a folder structure based on date extracted from the file

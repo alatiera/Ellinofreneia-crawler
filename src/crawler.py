@@ -4,7 +4,17 @@ import urllib.request
 import re
 import youtube_dl
 import ytdl
-from sys import argv
+
+
+site = 'http://ellinofreneianet.gr/'
+radiourl = site + 'radio/radio-shows-2.html'
+tvurl = site + 'television/tv-shows.html'
+
+# every page has limit=X elements(shows) and start defines the position
+radioargs = '?limit=11&start='
+tvargs = '?limit=21&start='
+
+showslist = []
 
 
 def getRadioShow(pageurl):
@@ -108,34 +118,3 @@ def limit(pageurl):
     slimit = int(b[0])
     # print(type(slimit))
     return slimit
-
-
-site = 'http://ellinofreneianet.gr/'
-radiourl = site + 'radio/radio-shows-2.html'
-tvurl = site + 'television/tv-shows.html'
-
-# every page has limit=X elements(shows) and start defines the position
-radioargs = '?limit=11&start='
-tvargs = '?limit=21&start='
-
-showslist = []
-
-
-def main():
-    if len(argv) != 3 or argv[1] == "-h" or argv[1] == "--help":
-        print('Usage:\n'
-              '<script> <type> <amount>\n'
-              'Example:\n'
-              './crawler.py tv 2\n'
-              './crawler.py radio 5\n')
-    else:
-        stype = argv[1]
-        amount = argv[2]
-        if stype == 'both':
-            getshow('radio', int(amount))
-            getshow('tv', int(amount))
-        else:
-            getshow(stype, int(amount))
-
-
-main()

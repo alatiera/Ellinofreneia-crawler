@@ -1,12 +1,15 @@
 # Ellinofreneia-crawler
-Crawler of Ellinofreneianet.gr for offline content consumption
+Crawler of [Ellinofreneia](Ellinofreneianet.gr) 's website
 
 ## Info:
-While making this I found 2 rss feeds you probably will be better off using.
+Unoficial crawler meant for offline content consumption.
+
+There also 2 hidden rss feeds on the site but they link to soundcloud/youtube.
 
 [radio](http://www.ellinofreneianet.gr/radio/radio-shows-2.feed?type=rss)
 
 [tv](http://www.ellinofreneianet.gr/television/tv-shows.feed?type=rss)
+
 
 ## Dependancies:
 [youtube_dl](https://github.com/rg3/youtube-dl/)
@@ -29,7 +32,7 @@ Downloads the last 5 radioshows:
 
 Downloads the last 3 radio and last 3 tv shows
 
-`./launcher.py crawl tv 4')`
+`./launcher.py crawl tv 4`
 
 Downloads the last 4 tv shows:
 

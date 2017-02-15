@@ -1,5 +1,5 @@
 # Ellinofreneia-crawler
-Crawler of [Ellinofreneia](Ellinofreneianet.gr) 's website
+Crawler of ellinofreneianet.gr website
 
 ## Info:
 Unoficial crawler meant for offline content consumption.

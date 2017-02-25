@@ -59,7 +59,11 @@ def main():
                   '\t./launcher.py crawl both 3')
 
     elif argv[1] == 'rename':
-        renamer.main()
+        if len(argv) >= 3 and argv[2] == '-r':
+            renamer.main(recursive=True)
+        else:
+            renamer.main()
+        print(argv)
 
     elif argv[1] == 'organize':
         file_organizer.main()

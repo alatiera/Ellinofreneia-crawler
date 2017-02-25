@@ -1,5 +1,5 @@
 import re
-from os import scandir, rename, getcwd
+from os import scandir, rename, getcwd, walk
 
 
 months = {
@@ -59,21 +59,37 @@ def renamer(fil):
     print('done!')
 
 
-def main():
-    path = getcwd()
-    # TODO os.scandir() changed in python 3.6 and might need refactor
-    ls = scandir(path)
-    for i in ls:
-        if re.search('^[0-9]+-[0-9]+-[0-9]+', i.name) and i.is_file():
-            # name reversing
-            # can also be used in opposite to keep only the date i[:13]
-            # rename(i.name, i.name[13:])
+def catwalk(cwd):
+    for foldername, subfold, filename in walk(cwd):
+        for j in filename:
+            if re.search('^[0-9]+-[0-9]+-[0-9]+', j):
+                print('alrdy good')
+            elif '.mp3' in j:
+                renamer(j)
+                print('done')
 
-            print('alrdy good')
-        elif i.is_file() and '.mp3' in i.name:
-            try:
-                renamer(i.name)
-            except IndexError as a:
-                print('Non matching file')
-                print(a)
-                continue
+
+def main(recursive=False):
+    path = getcwd()
+
+    if recursive is True:
+        catwalk(path)
+        print('done')
+
+    else:
+        # TODO os.scandir() changed in python 3.6 and might need refactor
+        ls = scandir(path)
+        for i in ls:
+            if re.search('^[0-9]+-[0-9]+-[0-9]+', i.name) and i.is_file():
+                # name reversing
+                # can also be used in opposite to keep only the date i[:13]
+                # rename(i.name, i.name[13:])
+
+                print('alrdy good')
+            elif i.is_file() and '.mp3' in i.name:
+                try:
+                    renamer(i.name)
+                except IndexError as a:
+                    print('Non matching file')
+                    print(a)
+                    continue

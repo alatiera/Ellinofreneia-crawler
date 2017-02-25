@@ -43,6 +43,9 @@ Downloads the last 4 tv shows:
 
 Rename the mp3 files based on their title.
 
+`./launcher.py rename -r`
+If passed with `-r` it will be performed recursivly
+
 ###Organize:
 `./launcher.py organize`
 

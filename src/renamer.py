@@ -10,6 +10,7 @@ months = {
         'Μαΐου': '05',
         'Ιουνίου': '06',
         'Ιουλίου': '07',
+        'Αυγούστου': '08',
         'Σεπτεμβρίου': '09',
         'Οκτωβρίου': '10',
         'Νοεμβρίου': '11',
@@ -17,14 +18,21 @@ months = {
         }
 
 
+def getMonth(title):
+    for month in months.keys():
+        if month in title:
+            return months.get(month)
+    return None
+
+
 def getDate(fil):
     """Extracts and returns the date from file's title"""
     year = re.findall('\s([0-9]{4})', fil)[0]
     day = re.findall('\s(\d{1,2})\D{2}', fil)[0]
-    month = fil.split()[5]
     if len(day) == 1:
         day = '0' + day
-    date = year + '-' + months[month] + '-' + day
+    # date = year + '-' + months.get(month, 'None') + '-' + day
+    date = year + '-' + getMonth(fil) + '-' + day
     return date
 
 
@@ -55,8 +63,11 @@ def getYear(fil):
 
 
 def renamer(fil):
-    rename(fil, getDate(fil) + ' - ' + getTitle(fil) + '.mp3')
-    print('done!')
+    try:
+        rename(fil, getDate(fil) + ' - ' + getTitle(fil) + '.mp3')
+        # print('done')
+    except IndexError:
+        print('Error with {}'.format(fil))
 
 
 def catwalk(cwd):
@@ -66,7 +77,6 @@ def catwalk(cwd):
                 print('alrdy good')
             elif '.mp3' in j:
                 renamer(j)
-                print('done')
 
 
 def main(recursive=False):
@@ -74,7 +84,6 @@ def main(recursive=False):
 
     if recursive is True:
         catwalk(path)
-        print('done')
 
     else:
         # TODO os.scandir() changed in python 3.6 and might need refactor
@@ -87,9 +96,6 @@ def main(recursive=False):
 
                 print('alrdy good')
             elif i.is_file() and '.mp3' in i.name:
-                try:
-                    renamer(i.name)
-                except IndexError as a:
-                    print('Non matching file')
-                    print(a)
-                    continue
+                renamer(i.name)
+            else:
+                pass

@@ -63,7 +63,6 @@ def main():
             renamer.main(recursive=True)
         else:
             renamer.main()
-        print(argv)
 
     elif argv[1] == 'organize':
         file_organizer.main()

@@ -28,4 +28,6 @@ ydl_opts = {
     }],
     'logger': MyLogger(),
     'progress_hooks': [my_hook],
+    'outtmpl': '%(title)s.%(ext)s'
+    # 'outtmpl': '%(upload_date)s - %(title)s.%(ext)s'
 }

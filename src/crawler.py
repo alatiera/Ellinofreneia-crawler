@@ -38,7 +38,7 @@ def getTVShow(pageurl):
 def getTVEpisode(pageurl):
     """takes url and find the youtube url"""
     page = requests.get(pageurl)
-    episode = re.findall(b'src="(.+youtube\.com/watch.+)"', page.text)
+    episode = re.findall('src="(.+youtube\.com/watch.+)"', page.text)
     print(episode[0])
     return episode[0]
 
@@ -105,7 +105,7 @@ def showlimit(stype):
         page = requests.get(radiourl)
         return limit(page.text)
     elif stype == 'tv':
-        page = requests(tvurl)
+        page = requests.get(tvurl)
         return limit(page.text)
 
 

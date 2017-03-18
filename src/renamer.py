@@ -74,7 +74,8 @@ def catwalk(cwd):
     for foldername, subfold, filename in walk(cwd):
         for j in filename:
             if re.search('^[0-9]+-[0-9]+-[0-9]+', j):
-                print('alrdy good')
+                pass
+                # print('alrdy good')
             elif '.mp3' in j:
                 renamer(j)
 
@@ -94,8 +95,7 @@ def main(recursive=False):
                 # can also be used in opposite to keep only the date i[:13]
                 # rename(i.name, i.name[13:])
 
-                print('alrdy good')
+                # print('alrdy good')
+                pass
             elif i.is_file() and '.mp3' in i.name:
                 renamer(i.name)
-            else:
-                pass

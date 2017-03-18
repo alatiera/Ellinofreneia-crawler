@@ -67,7 +67,7 @@ def multidl(list):
             ydl_opts = {}
             dl(getTVEpisode(i), ydl_opts)
         else:
-            dl(i, ytdl.ydl_opts)
+            dl(i, ytdl.config_existance())
 
 
 def getshow(stype, limit):

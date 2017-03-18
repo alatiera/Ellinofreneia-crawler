@@ -41,5 +41,5 @@ def main():
     for i in ls:
         if i.is_file() and '.mp3' in i.name:
             organize(i.name)
-        else:
-            print('invalid file')
+        # else:
+        #     print('invalid file')

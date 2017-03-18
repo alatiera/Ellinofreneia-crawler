@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import urllib.request
+import requests
 import re
 import youtube_dl
 import ytdl
@@ -19,29 +19,28 @@ showslist = []
 
 def getRadioShow(pageurl):
     """ Extract the urls as a list of the radio shows"""
-    page = urllib.request.urlopen(pageurl).read()
-    shows = re.findall(b'meta\sproperty="og:url".*content="(.*)"', page)
+    page = requests.get(pageurl)
+    shows = re.findall('meta\sproperty="og:url".*content="(.*)"', page.text)
     for i in shows:
-        showslist.append(i.decode())
-        print(i.decode())
+        showslist.append(i)
+        print(i)
 
 
 def getTVShow(pageurl):
     """Gets the a url list of the episodes in the page"""
-    page = urllib.request.urlopen(pageurl).read()
-    # print(page.decode())
-    shows = re.findall(b'href="/(television/tv-shows/video/\S+)"', page)
+    page = requests.get(pageurl)
+    shows = re.findall('href="/(television/tv-shows/video/\S+)"', page.text)
     for a in shows:
-        showslist.append(site + a.decode())
-        # print(a.decode())
+        showslist.append(site + a)
+        # print(a)
 
 
 def getTVEpisode(pageurl):
     """takes url and find the youtube url"""
-    page = urllib.request.urlopen(pageurl).read()
-    episode = re.findall(b'src="(.+youtube\.com/watch.+)"', page)
-    print(episode[0].decode())
-    return episode[0].decode()
+    page = requests.get(pageurl)
+    episode = re.findall(b'src="(.+youtube\.com/watch.+)"', page.text)
+    print(episode[0])
+    return episode[0]
 
 
 def dl(contenturl, opt):
@@ -103,13 +102,11 @@ def backlog(stype, count):
 def showlimit(stype):
     """Passes the page and the type to limit() """
     if stype == 'radio':
-        a = urllib.request.urlopen(radiourl).read()
-        page = a.decode()
-        return limit(page)
+        page = requests.get(radiourl)
+        return limit(page.text)
     elif stype == 'tv':
-        a = urllib.request.urlopen(tvurl).read()
-        page = a.decode()
-        return limit(page)
+        page = requests(tvurl)
+        return limit(page.text)
 
 
 def limit(pageurl):

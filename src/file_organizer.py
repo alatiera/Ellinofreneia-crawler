@@ -1,6 +1,6 @@
 import shutil
 from renamer import getYear
-from os import path, mkdir, getcwd, scandir
+from os import path, makedirs, getcwd, scandir
 
 
 def move_file(fil, dest):
@@ -15,7 +15,7 @@ def test_dir(src):
         # print('path {} alrdy exists'.format(src))
         pass
     else:
-        mkdir(src)
+        makedirs(src)
         print('folder {} created'.format(src))
     return src
 

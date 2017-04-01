@@ -26,8 +26,8 @@ def opts():
     rename = subparsers.add_parser('rename',
                                    help='Renames radio shows to sort properly')
     rename.add_argument('ren', action='store_true')
-    rename.add_argument('-r', '--recursive', help='Executes recursivly',
-                        action='store_true')
+    # rename.add_argument('-r', '--recursive', help='Executes recursivly',
+    #                     action='store_true')
 
     org = subparsers.add_parser('sort', aliases=['organize'], help="""Organizes
     mp3s in a folder structure based on date extracted from the file""")
@@ -51,10 +51,10 @@ def main():
             crawler.getshow('tv', args.num)
 
     if 'ren' in args:
-        if args.recursive:
-            renamer.main(recursive=True)
-        else:
-            renamer.main()
+        # if args.recursive:
+        #     renamer.main(recursive=True)
+        # else:
+        renamer.main()
 
     if 'sort' in args:
         file_organizer.main()

@@ -31,7 +31,11 @@ def getTVShow(pageurl):
     page = requests.get(pageurl)
     shows = re.findall('href="/(television/tv-shows/video/\S+)"', page.text)
     for a in shows:
-        showslist.append(site + a)
+        fullurl = site + a
+        if fullurl in showslist:
+            continue
+        else:
+            showslist.append(fullurl)
         # print(a)
 
 
@@ -39,7 +43,7 @@ def getTVEpisode(pageurl):
     """takes url and find the youtube url"""
     page = requests.get(pageurl)
     episode = re.findall('src="(.+youtube\.com/watch.+)"', page.text)
-    print(episode[0])
+    # print(episode[0])
     return episode[0]
 
 

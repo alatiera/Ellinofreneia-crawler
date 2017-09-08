@@ -1,5 +1,6 @@
 use structopt::StructOpt;
 use loggerv;
+use Result;
 
 // Hello world.
 #[derive(StructOpt, Debug)]
@@ -22,10 +23,4 @@ pub fn run() -> Result<()> {
 
     info!("It's all good!");
     Ok(())
-}
-
-error_chain! {
-    foreign_links {
-        Log(::log::SetLoggerError);
-    }
 }

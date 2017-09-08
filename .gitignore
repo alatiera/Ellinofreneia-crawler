@@ -92,4 +92,7 @@ ENV/
 /target/
 **/*.rs.bk
 
+# mypy
+.mypy_cache
+
 .vscode

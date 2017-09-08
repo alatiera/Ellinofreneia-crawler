@@ -12,13 +12,16 @@ There also 2 hidden rss feeds on the site but they link to soundcloud/youtube.
 
 
 ## Dependancies:
-[youtube_dl](https://github.com/rg3/youtube-dl/)
-[requests](http://docs.python-requests.org/en/master/)
 
-##Usage:
+* [youtube_dl](https://github.com/rg3/youtube-dl/)
+
+* [requests](http://docs.python-requests.org/en/master/)
+
+## Usage:
+
 `./launcher.py [dl] [rename] [organize]`
 
-####Examples:
+#### Examples:
 
 `./launcher.py dl 5 -a`
 
@@ -32,9 +35,9 @@ Downloads the last 3 radio and last 3 tv shows
 
 Downloads the last 4 tv shows:
 
-###Audio files specific:
+## Audio files specific:
 
-###Rename:
+### Rename:
 `./launcher.py rename`
 
 Rename the mp3 files based on their title.
@@ -42,7 +45,7 @@ Rename the mp3 files based on their title.
 `./launcher.py rename -r`
 If passed with `-r` it will be performed recursivly
 
-###Organize:
+### Organize:
 `./launcher.py organize`
 
 Organizes mp3s in a folder structure based on date extracted from the file

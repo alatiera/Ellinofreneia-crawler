@@ -59,5 +59,5 @@ def main():
     if 'sort' in args:
         file_organizer.main()
 
-
-main()
+if __name__ == '__main__':
+    main()

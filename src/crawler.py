@@ -32,10 +32,9 @@ def getTVShow(pageurl):
     shows = re.findall('href="/(television/tv-shows/video/\S+)"', page.text)
     for a in shows:
         fullurl = site + a
-        if fullurl in showslist:
-            continue
-        else:
+        if fullurl not in showslist:
             showslist.append(fullurl)
+
         # print(a)
 
 

@@ -63,3 +63,13 @@ fn page_limit(document: &Document) -> Option<i32> {
         _ => None,
     }
 }
+
+#[cfg(test)]
+#[test]
+fn page_limit_test() {
+    let radio = Document::from(include_str!("../tests/radio-shows-2.html"));
+    assert_eq!(page_limit(&radio).unwrap(), 1221);
+
+    let tv = Document::from(include_str!("../tests/tv-shows.html"));
+    assert_eq!(page_limit(&tv).unwrap(), 231);
+}

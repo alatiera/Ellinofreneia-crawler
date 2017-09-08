@@ -1,3 +1,5 @@
+#![recursion_limit = "1024"]
+
 extern crate structopt;
 #[macro_use]
 extern crate structopt_derive;

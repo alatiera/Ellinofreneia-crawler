@@ -4,9 +4,14 @@ use reqwest;
 use Result;
 
 pub fn main() -> Result<()> {
-    let res = reqwest::get("http://www.ellinofreneianet.gr/radio/radio-shows-2.html")?;
-    let res1 = reqwest::get("http://www.ellinofreneianet.gr/television/tv-shows.html")?;
+    let base_url = "http://ellinofreneianet.gr/";
+    let _radio_shows = "radio/radio-shows-2.html";
+    let _tv_shows = "television/tv-shows.html";
+    let _radio_args = "?limit=11&start=";
+    let _tv_args = "?limit=21&start=";
 
+    let res = reqwest::get(&format!("{}{}", base_url, _radio_shows))?;
+    let res1 = reqwest::get(&format!("{}{}", base_url, _tv_shows))?;
     // let document = Document::from(include_str!("../tests/radio-shows-2.html"));
     let document = Document::from_read(res)?;
     let document1 = Document::from_read(res1)?;
@@ -16,10 +21,16 @@ pub fn main() -> Result<()> {
     println!("{:#?}", radio_links);
     println!("{:#?}", tv_links);
 
-    let limit = page_limit(&document);
-    let limit1 = page_limit(&document1);
-    println!("{:?}", limit);
-    println!("{:?}", limit1);
+    let limit = page_limit(&document).unwrap();
+    // let limit1 = page_limit(&document1).unwrap();
+    // println!("{:?}", limit);
+    // println!("{:?}", limit1);
+
+    let url = format!("{}{}{}", base_url, _radio_shows, _radio_args);
+    println!("{}", url);
+    let links = backlog(&url, limit, 11);
+
+    println!("{:#?}", links);
 
     Ok(())
 }
@@ -61,6 +72,28 @@ fn page_limit(document: &Document) -> Option<i32> {
         } 
         _ => None,
     }
+}
+
+// TODO: look how a python generator is implemented in rust.
+fn backlog(url: &str, limit: i32, step: i32) -> Result<Vec<String>> {
+    let mut count = 0;
+    let mut links: Vec<String> = vec![];
+
+    while count < limit && links.len() <= limit as usize {
+        let foo = format!("{}{}", url, count);
+        println!("{}", foo);
+        let res = reqwest::get(&foo)?;
+        let doc = Document::from_read(res)?;
+        let l = get_radio_shows(&doc);
+        // links.append(&mut l);
+        for f in l {
+            println!("{}", f);
+            links.push(f.to_string())
+        }
+
+        count += step;
+    }
+    Ok(links)
 }
 
 #[cfg(test)]

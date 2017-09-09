@@ -1,17 +1,17 @@
 use select::document::Document;
-use select::predicate::{Attr, Class, Name};
+use select::predicate::{Attr, Class};
 use reqwest;
 use Result;
 
-pub fn main() -> Result<()> {
-    let base_url = "http://ellinofreneianet.gr/";
-    let _radio_shows = "radio/radio-shows-2.html";
-    let _tv_shows = "television/tv-shows.html";
-    let _radio_args = "?limit=11&start=";
-    let _tv_args = "?limit=21&start=";
+const BASE_URL: &str = "http://ellinofreneianet.gr/";
+const _RADIO_SHOWS: &str = "radio/radio-shows-2.html";
+const _TV_SHOWS: &str = "television/tv-shows.html";
+const _RADIO_ARGS: &str = "?limit=11&start=";
+const _TV_ARGS: &str = "?limit=21&start=";
 
-    let res = reqwest::get(&format!("{}{}", base_url, _radio_shows))?;
-    let res1 = reqwest::get(&format!("{}{}", base_url, _tv_shows))?;
+pub fn main() -> Result<()> {
+    let res = reqwest::get(&format!("{}{}", BASE_URL, _RADIO_SHOWS))?;
+    let res1 = reqwest::get(&format!("{}{}", BASE_URL, _TV_SHOWS))?;
     // let document = Document::from(include_str!("../tests/radio-shows-2.html"));
     let document = Document::from_read(res)?;
     let document1 = Document::from_read(res1)?;
@@ -26,7 +26,7 @@ pub fn main() -> Result<()> {
     // println!("{:?}", limit);
     // println!("{:?}", limit1);
 
-    let url = format!("{}{}{}", base_url, _radio_shows, _radio_args);
+    let url = format!("{}{}{}", BASE_URL, _RADIO_SHOWS, _RADIO_ARGS);
     println!("{}", url);
     let links = backlog(&url, limit, 11);
 
@@ -81,13 +81,13 @@ fn backlog(url: &str, limit: i32, step: i32) -> Result<Vec<String>> {
 
     while count < limit && links.len() <= limit as usize {
         let foo = format!("{}{}", url, count);
-        println!("{}", foo);
+        // println!("{}", foo);
         let res = reqwest::get(&foo)?;
         let doc = Document::from_read(res)?;
         let l = get_radio_shows(&doc);
-        // links.append(&mut l);
+
         for f in l {
-            println!("{}", f);
+            // println!("{}", f);
             links.push(f.to_string())
         }
 

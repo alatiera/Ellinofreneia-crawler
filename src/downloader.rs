@@ -1,13 +1,28 @@
 use reqwest;
 use select::document::Document;
 use select::predicate::{Class, Attr};
+use rafy::Rafy;
 use errors::*;
 
-pub fn youtube_dl(url: &str) -> Result<()> {
+pub fn from_youtube(url: &str) -> Result<()> {
     let res = reqwest::get(url)?;
 
     let doc = Document::from_read(res)?;
+    let yt = get_youtube_url(&doc)?;
+    rafy_dl(&yt)?;
 
+    Ok(())
+}
+
+fn rafy_dl(yt_url: &str) -> Result<()> {
+    let content = Rafy::new(yt_url).unwrap();
+    // the trait `std::convert::From<rafy::Error>` is not implemented for `errors::Error`
+    // let content = Rafy::new(&yt)?;
+    let title = content.title;
+    let streams = content.streams;
+    let ref stream = streams[0];
+    // stream.download(&title)?;
+    stream.download(&title).unwrap();
     Ok(())
 }
 
@@ -23,6 +38,13 @@ fn get_youtube_url(document: &Document) -> Result<String> {
     let foo = tv_link.first().unwrap().to_string();
 
     Ok(foo)
+}
+
+// TODO: make it a test and check for the downloaded file
+pub fn to_be_made_into_test() -> Result<()> {
+    let f = "http://www.ellinofreneianet.gr/television/tv-shows/video/301-20-06-2017.html";
+    from_youtube(f)?;
+    Ok(())
 }
 
 #[cfg(test)]

@@ -10,6 +10,7 @@ extern crate log;
 extern crate loggerv;
 extern crate select;
 extern crate reqwest;
+extern crate rafy;
 
 pub mod cli;
 pub mod crawler;

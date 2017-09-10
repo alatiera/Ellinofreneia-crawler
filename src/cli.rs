@@ -1,6 +1,6 @@
 use structopt::StructOpt;
 use loggerv;
-use Result;
+use errors::*;
 
 // Hello world.
 #[derive(StructOpt, Debug)]

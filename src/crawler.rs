@@ -1,7 +1,7 @@
 use select::document::Document;
 use select::predicate::{Attr, Class};
 use reqwest;
-use Result;
+use errors::*;
 
 const BASE_URL: &str = "http://ellinofreneianet.gr/";
 const _RADIO_SHOWS: &str = "radio/radio-shows-2.html";

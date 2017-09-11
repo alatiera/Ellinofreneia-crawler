@@ -13,6 +13,7 @@ pub fn main() -> Result<()> {
     let res = reqwest::get(&format!("{}{}", BASE_URL, _RADIO_SHOWS))?;
     let res1 = reqwest::get(&format!("{}{}", BASE_URL, _TV_SHOWS))?;
     // let document = Document::from(include_str!("../tests/radio-shows-2.html"));
+    // let document1 = Document::from(include_str!("../tests/tv-shows.html"));
     let document = Document::from_read(res)?;
     let document1 = Document::from_read(res1)?;
 
@@ -22,15 +23,15 @@ pub fn main() -> Result<()> {
     println!("{:#?}", tv_links);
 
     let limit = page_limit(&document).unwrap();
-    // let limit1 = page_limit(&document1).unwrap();
-    // println!("{:?}", limit);
-    // println!("{:?}", limit1);
+    let limit1 = page_limit(&document1).unwrap();
+    println!("{:?}", limit);
+    println!("{:?}", limit1);
 
-    let url = format!("{}{}{}", BASE_URL, _RADIO_SHOWS, _RADIO_ARGS);
-    println!("{}", url);
-    let links = backlog(&url, limit, 11);
+    // let url = format!("{}{}{}", BASE_URL, _RADIO_SHOWS, _RADIO_ARGS);
+    // println!("{}", url);
+    // let links = backlog(&url, limit, 11);
 
-    println!("{:#?}", links);
+    // println!("{:#?}", links);
 
     Ok(())
 }
@@ -58,7 +59,6 @@ fn get_tv_shows(document: &Document) -> Vec<&str> {
 fn page_limit(document: &Document) -> Option<i32> {
     let limit = document.find(Attr("title", "Τέλος")).next();
 
-    // println!("{:?}", limit);
     match limit {
         Some(foo) => {
             // It feels like regex
@@ -67,7 +67,7 @@ fn page_limit(document: &Document) -> Option<i32> {
             bar.reverse();
             let num = bar.first().unwrap().parse().unwrap();
 
-            // println!("{:?}", num);
+            info!("Limit: {:?}", num);
             return Some(num);
         } 
         _ => None,
@@ -79,15 +79,22 @@ fn backlog(url: &str, limit: i32, step: i32) -> Result<Vec<String>> {
     let mut count = 0;
     let mut links: Vec<String> = vec![];
 
+    // ensure that you dont fetch the whole backlog if not needed
     while count < limit && links.len() <= limit as usize {
+        info!("Count: {:?}", count);
+        info!("Limit: {:?}", limit);
+        // info!("Links Received: {:?}", links.len());
+
         let foo = format!("{}{}", url, count);
-        // println!("{}", foo);
+        info!("Calling {}", foo);
+
         let res = reqwest::get(&foo)?;
         let doc = Document::from_read(res)?;
         let l = get_radio_shows(&doc);
 
+        info!("Links Received:");
         for f in l {
-            // println!("{}", f);
+            info!("{:?}", f);
             links.push(f.to_string())
         }
 

@@ -1,10 +1,11 @@
 use reqwest;
 use select::document::Document;
-use select::predicate::{Class, Attr};
+use select::predicate::Attr;
 use rafy::Rafy;
 use errors::*;
 
 pub fn from_youtube(url: &str) -> Result<()> {
+    info!("Calling {}", url);
     let res = reqwest::get(url)?;
 
     let doc = Document::from_read(res)?;
@@ -15,13 +16,19 @@ pub fn from_youtube(url: &str) -> Result<()> {
 }
 
 fn rafy_dl(yt_url: &str) -> Result<()> {
+    info!("Starting download of: {:?}", yt_url);
+    // Copied directly from the Raffy Example.
     let content = Rafy::new(yt_url).unwrap();
-    // the trait `std::convert::From<rafy::Error>` is not implemented for `errors::Error`
-    // let content = Rafy::new(&yt)?;
+    // Rafy::Error dsnt impl Send yet I think so it cant be added to error-chain
+    // let content = Rafy::new(yt_url)?;
     let title = content.title;
+    info!("Video title: {:?}", title);
     let streams = content.streams;
+    // Debug not implemented for stream structs
+    // info!("Rafy streams Struct: {:?}", streams);
     let ref stream = streams[0];
     // stream.download(&title)?;
+    info!("Downloading {:?}", title);
     stream.download(&title).unwrap();
     Ok(())
 }
@@ -31,11 +38,12 @@ fn get_youtube_url(document: &Document) -> Result<String> {
         .find(Attr("type", "video/youtube"))
         .filter_map(|x| x.attr("src"))
         .collect();
-    // println!("{:#?}", tv_link);
+    info!("Found video(s): {:?}", tv_link);
 
     // FIXME: compiler dsnt like &&str :3, and with good reason prolly
     // let foo = tv_link.first()?.to_string();
     let foo = tv_link.first().unwrap().to_string();
+    info!("Returnign youtube url: {}", foo);
 
     Ok(foo)
 }

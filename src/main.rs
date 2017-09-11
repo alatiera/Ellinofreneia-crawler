@@ -6,7 +6,5 @@ extern crate ellinofreneia;
 
 
 use ellinofreneia::cli::run;
-use ellinofreneia::crawler;
 
-// quick_main!(run);
-quick_main!(crawler::main);
+quick_main!(run);

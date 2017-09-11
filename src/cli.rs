@@ -22,5 +22,7 @@ pub fn run() -> Result<()> {
     // ...
 
     info!("It's all good!");
+
+    ::crawler::main()?;
     Ok(())
 }

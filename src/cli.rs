@@ -19,9 +19,9 @@ enum Opt1 {
     #[structopt(name = "download")]
     /// Download latest Episodes!
     Download {
-        #[structopt(long = "tv")]
+        #[structopt(long = "tv", conflicts_with = "radio")]
         tv: bool,
-        #[structopt(long = "radio")]
+        #[structopt(long = "radio", conflicts_with = "tv")]
         radio: bool,
 
         #[structopt(short = "a", long = "all", default_value = "true")]
@@ -39,18 +39,38 @@ pub fn run() -> Result<()> {
     loggerv::init_with_verbosity(args.verbosity)?;
 
     let foo = args.dl;
-
-    // This works
     info!("{:?}", foo);
 
-    // This dsnt and I hate everything
-    // info!("{:?}", foo.all);
-
-    // ::crawler::latest_radio(args.amount as u64)?;
-    // ::crawler::latest_tv(45)?;
-
-    // Placeholder
-    ::download_tv(45)?;
+    match foo {
+        Opt1::Download {
+            tv,
+            radio,
+            all,
+            amount,
+        } => placeholder(tv, radio, all, amount),
+        _ => (),
+    };
 
     Ok(())
+}
+
+fn placeholder(tv: bool, radio: bool, all: bool, amount: Option<i64>) {
+
+    // Check if either radio or tv flag is present
+    // If not default to dl all
+
+    if tv == true {
+        ::download_tv(amount.unwrap() as u64).unwrap();
+    }
+
+    if radio == true {
+
+        // Not implemented yet
+        // ::download_radio(amount.unwrap() as u64);}
+    }
+
+    if all == true {
+        //do both
+    }
+
 }

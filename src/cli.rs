@@ -15,7 +15,6 @@ struct Opt {
 
 #[derive(StructOpt, Debug)]
 #[structopt(name = "Ellinofreneia-Crawler")]
-/// the stupid content tracker
 enum Opt1 {
     #[structopt(name = "download")]
     /// Download latest Episodes!
@@ -40,6 +39,7 @@ pub fn run() -> Result<()> {
     loggerv::init_with_verbosity(args.verbosity)?;
 
     let foo = args.dl;
+
     // This works
     info!("{:?}", foo);
 
@@ -47,6 +47,10 @@ pub fn run() -> Result<()> {
     // info!("{:?}", foo.all);
 
     // ::crawler::latest_radio(args.amount as u64)?;
-    // ::crawler::latest_tv(am as u64)?;
+    // ::crawler::latest_tv(45)?;
+
+    // Placeholder
+    ::download_tv(45)?;
+
     Ok(())
 }

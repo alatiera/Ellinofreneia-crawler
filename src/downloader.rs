@@ -43,7 +43,7 @@ fn get_youtube_url(document: &Document) -> Result<String> {
     // FIXME: compiler dsnt like &&str :3, and with good reason prolly
     // let foo = tv_link.first()?.to_string();
     let foo = tv_link.first().unwrap().to_string();
-    info!("Returnign youtube url: {}", foo);
+    debug!("Returned youtube url: {}", foo);
 
     Ok(foo)
 }

@@ -29,3 +29,15 @@ pub mod errors {
         }
     }
 }
+
+use errors::*;
+
+pub fn download_tv(limit: u64) -> Result<()> {
+    let episodes = crawler::latest_tv(limit)?;
+
+    for ep in episodes.iter() {
+        downloader::from_youtube(&ep)?;
+    }
+
+    Ok(())
+}

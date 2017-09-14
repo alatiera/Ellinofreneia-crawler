@@ -15,24 +15,18 @@ enum Show {
     Tv,
 }
 
-pub fn latest_radio(limit: u64) -> Result<()> {
+pub fn latest_radio(limit: u64) -> Result<Vec<String>> {
     let url = format!("{}{}{}", BASE_URL, _RADIO_SHOWS, _RADIO_ARGS);
-    let links = backlog(&url, limit, Show::Radio).unwrap();
+    let links = backlog(&url, limit, Show::Radio);
 
-    info!("Links Received: {}", links.len());
-    debug!("{:?}", links);
-
-    Ok(())
+    links
 }
 
-pub fn latest_tv(limit: u64) -> Result<()> {
+pub fn latest_tv(limit: u64) -> Result<Vec<String>> {
     let url = format!("{}{}{}", BASE_URL, _TV_SHOWS, _TV_ARGS);
-    let links = backlog(&url, limit, Show::Tv).unwrap();
+    let links = backlog(&url, limit, Show::Tv);
 
-    info!("Links Received: {}", links.len());
-    debug!("{:?}", links);
-
-    Ok(())
+    links
 }
 
 fn get_radio_shows(document: &Document) -> Vec<&str> {
@@ -98,14 +92,15 @@ fn backlog(url: &str, limit: u64, show_step: Show) -> Result<Vec<String>> {
             Show::Tv => get_tv_shows(&doc),
         };
 
-        info!("Links Received:");
+        debug!("Links Received: {:?}", l);
         for f in l {
 
             if links.len() >= limit as usize {
                 break;
             }
-            info!("{:?}", f);
-            links.push(f.to_string())
+            debug!("{:?}", f);
+            debug!("{}{}", BASE_URL, f.to_string());
+            links.push(format!("{}{}", BASE_URL, f.to_string()));
         }
 
         match show_step {

@@ -45,3 +45,9 @@ cargo run -- --help
 * Specified File-Save Path.
 
 * Not sure if a file renamer/organizer will be needed.
+
+### Additional notes:
+
+* rafy doesnt check atm if the file its about to download already exist, neither does it create a .part file.
+
+* Test coverage could be better.

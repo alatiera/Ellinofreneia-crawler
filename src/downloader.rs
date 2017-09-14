@@ -43,7 +43,7 @@ fn get_youtube_url(document: &Document) -> Result<String> {
     // FIXME: compiler dsnt like &&str :3, and with good reason prolly
     // let foo = tv_link.first()?.to_string();
     let foo = tv_link.first().unwrap().to_string();
-    debug!("Returned youtube url: {}", foo);
+    info!("Returnign youtube url: {}", foo);
 
     Ok(foo)
 }
@@ -56,10 +56,15 @@ pub fn to_be_made_into_test() -> Result<()> {
 }
 
 #[cfg(test)]
-#[test]
-fn test_youtube_url() {
+mod tests {
+
+    use super::*;
+
+    #[test]
+    fn test_youtube_url() {
     let doc = Document::from(include_str!("../tests/tv_episode.html"));
     let url = String::from("http://www.youtube.com/watch?v=xwAkcgkhiak");
     let foo = get_youtube_url(&doc).unwrap();
     assert_eq!(foo, url);
+    }
 }

@@ -11,57 +11,37 @@ There also 2 hidden rss feeds on the site but they link to soundcloud/youtube.
 [tv](http://www.ellinofreneianet.gr/television/tv-shows.feed?type=rss)
 
 
-## Dependancies:
+## Cargo Dependancies:
 
-* [youtube_dl](https://github.com/rg3/youtube-dl/)
+* [error-chain](https://github.com/rust-lang-nursery/error-chain)
 
-* [requests](http://docs.python-requests.org/en/master/)
+* [reqwests](https://github.com/seanmonstar/reqwest)
 
-## Usage:
+* [structopt](https://github.com/TeXitoi/structopt)
 
-`./launcher.py [dl] [rename] [organize]`
+* [structopt-derive](https://github.com/TeXitoi/structopt)
 
-#### Examples:
+* [log](https://github.com/rust-lang/log)
 
-`./launcher.py dl 5 -a`
+* [loggerv](https://github.com/clux/loggerv)
 
-Downloads the last 5 radioshows:
+* [rafy](https://github.com/ritiek/rafy-rs)
 
-`./launcher.py dl 3`
+## Build:
 
-Downloads the last 3 radio and last 3 tv shows
-
-`./launcher.py dl 4 -v`
-
-Downloads the last 4 tv shows:
-
-## Audio files specific:
-
-### Rename:
-`./launcher.py rename`
-
-Rename the mp3 files based on their title.
-
-`./launcher.py rename -r`
-If passed with `-r` it will be performed recursivly
-
-### Organize:
-`./launcher.py organize`
-
-Organizes mp3s in a folder structure based on date extracted from the file
-
-## ./launcher.py --help :
 ```
-usage: launcher.py [-h] {download,dl,crawl,rename,sort,organize} ...
-
-positional arguments:
-  {download,dl,crawl,rename,sort,organize}
-    download (dl, crawl)
-                        Downloads the shows
-    rename              Renames radio shows to sort properly
-    sort (organize)     Organizes mp3s in a folder structure based on date
-                        extracted from the file
-
-optional arguments:
-  -h, --help            show this help message and exit
+git clone https://github.com/alatiera/Ellinofreneia-crawler.git
+git checkout rust-rewrite
+cargo build --release
+cargo run -- --help
 ```
+
+## Stuff Not yet in Feature-Parity with the python version. WIP.
+
+* Proper StructOpt menu.
+
+* Soundcloud ripper, There doesnt seem to be a crate to do that atm.
+
+* Specified File-Save Path.
+
+* Not sure if a file renamer/organizer will be needed.

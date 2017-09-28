@@ -1,5 +1,11 @@
 # Ellinofreneia-crawler
-dler of ellinofreneianet.gr website
+[![Travis CI][travis-image]][travis]
+
+[travis-image]: https://travis-ci.org/alatiera/Ellinofreneia-crawler.svg?branch=master
+
+[travis]: https://travis-ci.org/alatiera/Ellinofreneia-crawler
+
+Crawler of ellinofreneianet.gr website
 
 ## Info:
 Unoficial crawler meant for offline content consumption.
